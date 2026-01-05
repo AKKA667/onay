@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Мои билеты</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-image:
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url("ChatGPT Image 5 янв. 2026 г., 13_28_02.png");
+    background-size: cover;
+    background-position: center;
+    margin-top: 100px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* контейнер как экран телефона */
+.phone {
+    width: 100%;
+    max-width: 420px;
+    height: 100vh;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* билет */
+.ticket {
+    width: 800px;
+    background: #c9e31b;
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+    padding: 22px;
+    position: relative;
+    height: 750px;
+}
+
+/* вырезы */
+.ticket::before,
+.ticket::after {
+    content: "";
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background: #757575;
+    border-radius: 50%;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.ticket::before { left: -22px; }
+.ticket::after { right: -22px; }
+
+.label {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.route {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+span {
+    margin-left: 10px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+img{
+    width: 35px;
+    height: 35px;
+    margin-right: 12px;
+}
+
+.time {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    margin: 10px;
+}
+
+.code-label {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.code {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    
+}
+
+.screen {
+    display: none;
+    width: 100%;
+}
+
+.screen.active {
+    display: block;
+}
+
+.controls {
+    background: rgba(255,255,255,0.9);
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+
+.qr {
+    margin-top: 30px;
+    background: white;
+    border-radius: 20px;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.qr img {
+    width: 300px;
+    height: 300px;
+}
+</style>
+</head>
+
+<body>
+<div class="screen active" id="screen1">
+  <div class="controls">
+    🚍 Номер автобуса:<br><br>
+    <input type="number" id="busNum" value="3" min="1" max="300">
+    <br><br>
+    <button onclick="generate()">Сгенерировать</button>
+  </div>
+</div>
+<div class="screen" id="screen2">
+<div class="phone">
+    <div class="ticket">
+
+        <div class="label">Маршрут</div>
+        <div class="route">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABx0lEQVR4nO2ZvUoDQRSFPy1sNIWLpQ+grUQLf3q1MeRZfABBMIhg4TtYWaTI2tvpM8RuYwotrFSCoiMjuyBhZzITZrKzyR447BBu7rnfLCGbDKi1ChwDbeAReAW+ADFhvwFd4AZoAHMYah44AT4LGFoYOAZqJiAXAQwrRvh6FMQa8B3AoMLAGzqQS4tG2/jRjmH+ua7JgwWITwkD3+kavJQIpKtrMLAA2fUEsWeY/6xrIkrkwbSAiJkF6QNNIGLyitLsvgnIIdBL13nFslHRampA5OwH2SJ7Ma+4iDsxrEgDIq9JttCBhCKhAflbVyATlqhAqEC8SFQglAykNwUgCenXe1JikATYNy0OQcJmtqkGiSheKy5AQniMPw3lh5X8v3Z5DK8DV8CPC5CQrVTRg4kKZEhFDyYqkCGp3tABNoHF9Bp7HK5jkaWUqnGe2p4gbLKUyiuuK2q3PIDULbOsQFTndTUPIDXLrNm8I7Gi9tYDSGyZZQWSBchdWUqvPiDGyVLqw+OArv3u6jC0aN/rQBoBDCgMfaQD0X1OQvNIzRyILwlX+arzuv9+8oaBu/yWQaMzjyAtV/kLabO8nZE7IZvIGl8aK/8XqXg67LHWYOUAAAAASUVORK5CYII=" alt="bus"><div id="bus">3 </div><span>(2538)75OEX02</span>
+        </div>
+
+        <div class="label">Время</div>
+        <div class="time" id="time">05.01.2026&nbsp;&nbsp;00:43</div>
+
+        <div class="code-label">Код проверки:</div>
+        <div class="code" id="code">4F01A</div>
+
+        <div class="qr">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Ticket-4F01A">
+        </div>
+      </div>
+    </div>
+</div>
+<script>
+function randomCode() {
+  return Math.random().toString(36).substring(2,7).toUpperCase();
+}
+
+function generate() {
+  const bus = document.getElementById("busNum").value;
+  document.getElementById("bus").innerText = bus;
+
+  const now = new Date();
+  const time = now.toLocaleDateString("ru-RU") + " " +
+               now.toLocaleTimeString("ru-RU", {hour:'2-digit', minute:'2-digit'});
+  document.getElementById("time").innerText = time;
+
+  const code = randomCode();
+  document.getElementById("code").innerText = code;
+
+  // QR
+  document.querySelector(".qr img").src =
+    `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=BUS:${bus}|TIME:${time}|CODE:${code}`;
+
+  // 🔥 ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ
+  document.getElementById("screen1").classList.remove("active");
+  document.getElementById("screen2").classList.add("active");
+}
+</script>
+
+</body>
+</html>
